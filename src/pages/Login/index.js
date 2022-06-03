@@ -13,8 +13,8 @@ class Login extends Component {
 
       this.state = {
          userData: {
-            tenDangNhap: '',
-            matKhau: ''
+            username: '',
+            password: ''
          },
          loading: false,
          showAlert: false,
@@ -44,9 +44,9 @@ class Login extends Component {
 
          if (response && response.status === 200) {
             const { data } = response.data.result
-            const { tenDangNhap, hash } = data
+            const { username, hash } = data
             const localUser = {
-               tenDangNhap,
+               username,
                hash
             }
 
@@ -71,8 +71,8 @@ class Login extends Component {
    reset = () => {
       this.setState({
          userData: {
-            tenDangNhap: '',
-            matKhau: ''
+            username: '',
+            password: ''
          }
       })
    }
@@ -98,42 +98,42 @@ class Login extends Component {
 
    validateFields = () => {
       const { userData } = this.state
-      const { tenDangNhap, matKhau } = userData
+      const { username, password } = userData
       let errors = {}
-      let tenDangNhapErrors = []
-      let matKhauErrors = []
+      let userErrors = []
+      let passwordErrors = []
 
-      if (tenDangNhap === '') {
-         tenDangNhapErrors.push(
+      if (username === '') {
+         userErrors.push(
             'Tên đăng nhập là thông tin bắt buộc và không được để trống!'
          )
       }
 
-      if (matKhau === '') {
-         matKhauErrors.push(
+      if (password === '') {
+         passwordErrors.push(
             'Mật khẩu là thông tin bắt buộc và không được để trống!'
          )
       }
 
-      if (matKhau.length < 6) {
-         matKhauErrors.push('Mật khẩu phải có ít nhất 6 ký tự!')
+      if (password.length < 6) {
+         passwordErrors.push('Mật khẩu phải có ít nhất 6 ký tự!')
       }
 
-      if (tenDangNhapErrors.length > 0) {
+      if (userErrors.length > 0) {
          errors['tenDangNhap'] = {
             name: 'Tên đăng nhập',
-            errors: tenDangNhapErrors
+            errors: userErrors
          }
       }
 
-      if (matKhauErrors.length > 0) {
+      if (passwordErrors.length > 0) {
          errors['matKhau'] = {
             name: 'Mật khẩu',
-            errors: matKhauErrors
+            errors: passwordErrors
          }
       }
 
-      return tenDangNhapErrors.length > 0 || matKhauErrors.length > 0
+      return userErrors.length > 0 || passwordErrors.length > 0
          ? errors
          : null
    }
@@ -167,10 +167,7 @@ class Login extends Component {
       return (
          <div className="login-form__header">
             <img src="/images/logo.png" className="login-form__icon" />
-            <h1 className="login-form__title">{APP_SHORT_NAME}</h1>
-            <p className="text-center login-form__description">
-               {APP_DESCRIPTION}
-            </p>
+            <h3 className="login-form__title">{APP_SHORT_NAME}</h3>
             <hr />
          </div>
       )
@@ -183,41 +180,41 @@ class Login extends Component {
       return (
          <Fragment>
             <div className="form-group">
-               <label>Tên đăng nhập</label>
+               <label>Username</label>
                <input
                   type="text"
-                  placeholder="Nhập tên đăng nhập của bạn"
+                  placeholder="Input your username"
                   className={
-                     isValidField('tenDangNhap')
+                     isValidField('username')
                         ? 'form-input-alert'
                         : 'form-input-outline'
                   }
-                  value={userData && userData.tenDangNhap}
-                  onChange={e => changeUserData('tenDangNhap', e.target.value)}
+                  value={userData && userData.username}
+                  onChange={e => changeUserData('username', e.target.value)}
                   onFocus={hideAlert}
                   autoComplete="off"
                />
             </div>
 
             <div className="form-group">
-               <label>Mật khẩu</label>
+               <label>Password</label>
                <input
                   type="password"
-                  placeholder="Nhập mật khẩu của bạn"
+                  placeholder="Input your password"
                   className={
-                     isValidField('matKhau')
+                     isValidField('password')
                         ? 'form-input-alert'
                         : 'form-input-outline'
                   }
-                  value={userData && userData.matKhau}
-                  onChange={e => changeUserData('matKhau', e.target.value)}
+                  value={userData && userData.password}
+                  onChange={e => changeUserData('password', e.target.value)}
                   onFocus={hideAlert}
                   autoComplete="off"
                />
             </div>
 
             <button type="submit" className="login-button">
-               Đăng nhập
+               Login 
             </button>
 
             <hr />
@@ -233,7 +230,7 @@ class Login extends Component {
       const {
          submit,
          renderFormHeader,
-         renderErrors,
+         // renderErrors,
          renderFormBody,
          renderFormFooter
       } = this
@@ -241,7 +238,7 @@ class Login extends Component {
       return (
          <form onSubmit={submit} className="login-form">
             {renderFormHeader()}
-            {renderErrors()}
+            {/* {renderErrors()} */}
             {renderFormBody()}
             {renderFormFooter()}
          </form>

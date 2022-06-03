@@ -324,10 +324,14 @@ class App extends Component {
       const { showLoginPage } = this.state
 
       if (showLoginPage) {
-         return <Login />
+         return (<div>
+               <Login />
+               </div>
+         )
       } else {
          return (
             <Fragment>
+               
                {renderHeader()}
                {renderMain()}
                {/* {renderNotification()} */}
@@ -338,7 +342,7 @@ class App extends Component {
 
    render() {
       const { renderComponent } = this
-
+      
       return renderComponent()
    }
 }
